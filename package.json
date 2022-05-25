@@ -1,0 +1,37 @@
+{
+  "name": "rgmp-react-webpack-starter",
+  "version": "1.0.0",
+  "description": "React app without create-react-app cli",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --config webpack.dev.js --open --hot",
+    "build": "webpack build --config webpack.prod.js",
+    "build:dev": "webpack build --config webpack.dev.js",
+    "build:prod": "webpack build --config webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cziner21/RGMP-react-webpack-starter.git"
+  },
+  "author": "Adam Cziner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cziner21/RGMP-react-webpack-starter/issues"
+  },
+  "homepage": "https://github.com/cziner21/RGMP-react-webpack-starter#readme",
+  "dependencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.2",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-react": "^7.17.12",
+    "babel-loader": "^8.2.5",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0",
+    "webpack-merge": "^5.8.0"
+  }
+}
