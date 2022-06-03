@@ -1,0 +1,31 @@
+import React from 'react'
+import styled from 'styled-components'
+
+import StyledInput from './Input.jsx'
+import { Button } from './Button.jsx'
+
+const SearchBar = styled.div`
+    display: flex;
+
+    & input {
+        margin-right: 0.5em;
+    }
+`
+
+function Search() {
+    const handleButtonClicked = (value) => {
+        console.log(`Search button clicked ${value}`)
+    }
+
+    return (
+        <SearchBar>
+            <StyledInput
+                placeholder={'What do you want to watch?'}
+                onEnterPressed={(value) => handleButtonClicked(value)}
+            />
+            <Button onClick={() => handleButtonClicked()}>Search</Button>
+        </SearchBar>
+    )
+}
+
+export default Search
