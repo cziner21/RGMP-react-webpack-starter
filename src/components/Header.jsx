@@ -3,7 +3,8 @@ import styled from 'styled-components'
 
 import { Button, AddMovieButton } from './Button.jsx'
 import Search from './Search.jsx'
-
+import Brand from './Brand.jsx'
+import { device } from '../shared/devices.js'
 import img from '../../asetts/movieposters.jpg'
 
 const HeaderContainer = styled.div`
@@ -31,8 +32,12 @@ const HeaderContent = styled.div`
 
 const SearchLabel = styled.h1`
     text-transform: uppercase;
-    font-size: 3em;
+    font-size: 2em;
     color: #ffffff;
+
+    @media ${device.laptop} {
+        font-size: 3em;
+    }
 `
 
 const SearchWrapper = styled.div`
@@ -51,9 +56,7 @@ function Header() {
                         justifyContent: 'space-between',
                     }}
                 >
-                    <div style={{ color: '#f65261' }}>
-                        <strong>netflix</strong>roulette
-                    </div>
+                    <Brand />
                     <AddMovieButton>+ Add movie</AddMovieButton>
                 </div>
                 <SearchWrapper>

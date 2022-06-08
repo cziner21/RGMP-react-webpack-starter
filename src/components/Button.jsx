@@ -11,6 +11,7 @@ const Button = styled.button`
     border: 2px solid #f65261;
     border-radius: 3px;
     text-transform: uppercase;
+    cursor: pointered;
 `
 
 Button.propTypes = {

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 
-import KeyCodes from '../data/keycodes'
+import KeyCodes from '../shared/keycodes'
 
 function StyledInput(props) {
     const { type, name, placeholder, onEnterPressed } = props
