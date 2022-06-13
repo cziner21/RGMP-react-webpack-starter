@@ -34,6 +34,7 @@ const SearchLabel = styled.h1`
     text-transform: uppercase;
     font-size: 2em;
     color: #ffffff;
+    letter-spacing: 0.1em;
 
     @media ${device.laptop} {
         font-size: 3em;
@@ -45,7 +46,7 @@ const SearchWrapper = styled.div`
     margin: 0 auto;
 `
 
-function Header() {
+function Header({ onAddMovie }) {
     return (
         <HeaderContainer>
             <HeaderBackground></HeaderBackground>
@@ -57,7 +58,9 @@ function Header() {
                     }}
                 >
                     <Brand />
-                    <AddMovieButton>+ Add movie</AddMovieButton>
+                    <AddMovieButton onClick={() => onAddMovie()}>
+                        + Add movie
+                    </AddMovieButton>
                 </div>
                 <SearchWrapper>
                     <SearchLabel>Find your movie</SearchLabel>

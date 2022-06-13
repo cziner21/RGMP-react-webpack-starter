@@ -3,11 +3,17 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { sortByOptions } from '../data/sortByOptions'
+import Select from './Select.jsx'
+
+const Container = styled.div`
+    display: flex;
+    align-items: center;
+`
 
 const StyledLabel = styled.label`
     text-transform: uppercase;
     color: #555555;
-    margin-right: 2em;
+    margin-right: 1em;
 `
 
 function SortBy(props) {
@@ -28,35 +34,34 @@ function SortBy(props) {
         }
 
         const first = sortByOptions.find(
-            (x) => x.id === props.selectedSortByOption
+            (x) => x.id === props.selectedSortByOption.id
         )
         const remainingOptions = sortByOptions.filter(
-            (x) => x.id !== props.selectedSortByOption
+            (x) => x.id !== props.selectedSortByOption.id
         )
 
         setFilteredSortByOptions([first, ...remainingOptions])
     }
 
+    if (!props.selectedSortByOption) {
+        return null
+    }
+
     return (
-        <div>
+        <Container>
             <StyledLabel>Sort by</StyledLabel>
-            <select name="sort-by">
-                {filteredSortByOptions.map((x) => (
-                    <option
-                        key={x.id}
-                        value={x.id}
-                        onClick={props.onOptionSelected(x.id)}
-                    >
-                        {x.name}
-                    </option>
-                ))}
-            </select>
-        </div>
+
+            <Select
+                selectedItem={props.selectedSortByOption.name}
+                items={filteredSortByOptions}
+                onItemClicked={(id) => props.onOptionSelected(id)}
+            />
+        </Container>
     )
 }
 
 SortBy.PropTypes = {
-    selectedSortByOption: PropTypes.string.isRequired,
+    selectedSortByOption: PropTypes.any.isRequired,
     onOptionSelected: PropTypes.func.isRequired,
 }
 

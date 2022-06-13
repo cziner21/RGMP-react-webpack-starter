@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
@@ -7,23 +7,32 @@ import MovieTitle from './Title.jsx'
 import ReleaseDate from './ReleaseDate.jsx'
 import ContextMenu from './Menu.jsx'
 
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    position: relative;
+`
+
 const Details = styled.div`
     display: flex;
     flex-direction: column;
 `
 
-function Movie(props) {
+function Movie({ movie, coverPath, onEditMovie, onDeleteMovie }) {
+    const [isMenuVisible, setIsMenuVisible] = useState(false)
+
     return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                width: '150px',
-                position: 'relative',
-            }}
+        <Container
+            onMouseEnter={() => setIsMenuVisible(true)}
+            onMouseLeave={() => setIsMenuVisible(false)}
         >
+            <ContextMenu
+                onEdit={() => onEditMovie()}
+                onDelete={() => onDeleteMovie()}
+                isVisible={isMenuVisible}
+            />
             <CoverImage />
-            <ContextMenu></ContextMenu>
             <div
                 style={{
                     display: 'flex',
@@ -33,32 +42,32 @@ function Movie(props) {
                 }}
             >
                 <Details>
-                    <MovieTitle>{props.title}</MovieTitle>
+                    <MovieTitle>{movie.title}</MovieTitle>
                     <div
                         style={{
                             marginTop: '0.8em',
                         }}
                     >
-                        {props.genre.map((genre, index) => (
+                        {movie.genres.map((genre, index) => (
                             <span key={genre}>
-                                {index === props.genre.length - 1
+                                {index === movie.genres.length - 1
                                     ? genre
                                     : `${genre}, `}
                             </span>
                         ))}
                     </div>
                 </Details>
-                <ReleaseDate>{props.releaseDate}</ReleaseDate>
+                <ReleaseDate>{movie.releaseDate}</ReleaseDate>
             </div>
-        </div>
+        </Container>
     )
 }
 
 Movie.propTypes = {
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.arrayOf(PropTypes.string),
-    releaseDate: PropTypes.string.isRequired,
+    movie: PropTypes.any.isRequired,
     coverPath: PropTypes.string,
+    onEditMovie: PropTypes.func.isRequired,
+    onDeleteMovie: PropTypes.func.isRequired,
 }
 
 export { Movie }

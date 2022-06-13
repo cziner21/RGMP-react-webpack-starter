@@ -5,7 +5,7 @@ const Button = styled.button`
     background-color: ${(props) =>
         props.secondary ? 'transparent' : '#f65261'};
     color: ${(props) => (props.secondary ? '#f65261' : '#ffffff')};
-    font-size: 1em;
+    font-size: 1rem;
     margin: 0;
     padding: 0.25em 1em;
     border: 2px solid #f65261;
