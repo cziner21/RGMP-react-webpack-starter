@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
 import './app.css'
 import ErrorBoundary from './ErrorBoundary.jsx'
 import { Button, AddMovieButton } from './Button.jsx'
 import { ResultsFilter } from './Filter.jsx'
 import Search from './Search.jsx'
-import Header from './header.jsx'
+import Header from './Header.jsx'
 import Footer from './Footer.jsx'
 import Container from './Container.jsx'
 import { SearchResults } from './Results.jsx'
@@ -33,9 +33,7 @@ const App = () => {
     }, [])
 
     const handleSortingChanged = (id) => {
-        console.log(id)
         setSelectedSortByOption(sortByOptions.find((x) => x.id === id))
-        console.log(orderBy(Movies, id))
         setFilteredMovies(orderBy(Movies, id))
     }
 
@@ -74,33 +72,45 @@ const App = () => {
 
     return (
         <ErrorBoundary>
-            <div className="app">
-                <Header onAddMovie={() => handleAddMovieClick()} />
-                <Container>
-                    <ResultsFilter
-                        selectedGenre={selectedGenre}
-                        selectedSortByOption={selectedSortByOption}
-                        onSelectGenre={(index) =>
-                            setSelectedGenre(Genres[index])
-                        }
-                        onOptionSelected={(id) => handleSortingChanged(id)}
-                    ></ResultsFilter>
-                    <SearchResults
-                        movies={filteredMovies}
-                        onEditMovie={(id) => handleEditMovieClick(id)}
-                        onDeleteMovie={(id) => handleDeleteMovieClick(id)}
-                    />
-                </Container>
-                <Footer />
-                <Modal
-                    onHandleClose={() => setIsModalOpened(false)}
-                    isOpen={isModalOpened}
-                >
-                    <ManageMovie movie={currentMovie} isDeleting={isDeleting} />
-                </Modal>
-            </div>
+            <AppContext.Provider
+                value={{
+                    currentMovie: currentMovie,
+                    onSetCurrentMovie: setCurrentMovie,
+                }}
+            >
+                <div className="app">
+                    <Header onAddMovie={() => handleAddMovieClick()} />
+                    <Container>
+                        <ResultsFilter
+                            selectedGenre={selectedGenre}
+                            selectedSortByOption={selectedSortByOption}
+                            onSelectGenre={(index) =>
+                                setSelectedGenre(Genres[index])
+                            }
+                            onOptionSelected={(id) => handleSortingChanged(id)}
+                        ></ResultsFilter>
+                        <SearchResults
+                            movies={filteredMovies}
+                            onEditMovie={(id) => handleEditMovieClick(id)}
+                            onDeleteMovie={(id) => handleDeleteMovieClick(id)}
+                        />
+                    </Container>
+                    <Footer />
+                    <Modal
+                        onHandleClose={() => setIsModalOpened(false)}
+                        isOpen={isModalOpened}
+                    >
+                        <ManageMovie
+                            movie={currentMovie}
+                            isDeleting={isDeleting}
+                        />
+                    </Modal>
+                </div>
+            </AppContext.Provider>
         </ErrorBoundary>
     )
 }
+
+export const AppContext = React.createContext()
 
 export default App

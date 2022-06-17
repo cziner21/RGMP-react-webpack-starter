@@ -1,36 +1,39 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
-import { Button, AddMovieButton } from './Button.jsx'
+import { Button, AddMovieButton, SearchButton } from './Button.jsx'
 import Search from './Search.jsx'
 import Brand from './Brand.jsx'
+import Details from './Movie/Details.jsx'
 import { device } from '../shared/devices.js'
 import img from '../../asetts/movieposters.jpg'
+import { AppContext } from './App.js'
 
 const HeaderContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 1em 3em;
-    height: 250px;
+    height: ${(props) => (props.currentMovie ? `350px` : `250px`)};
 `
 
 const HeaderBackground = styled.img`
-    opacity: 0.4;
+    opacity: ${(props) => (props.currentMovie ? 1 : 0.4)};
     position: absolute;
     left: 0;
     top: 0;
     background-size: cover;
-    background-image: url(${img});
+    background-image: ${(props) =>
+        props.currentMovie ? `none` : `url(${img})`};
     background-color: #232323;
     width: 100%;
-    height: 250px;
+    height: ${(props) => (props.currentMovie ? `350px` : `250px`)};
 `
 
 const HeaderContent = styled.div`
     position: relative;
 `
 
-const SearchLabel = styled.h1`
+export const SearchLabel = styled.h1`
     text-transform: uppercase;
     font-size: 2em;
     color: #ffffff;
@@ -47,9 +50,13 @@ const SearchWrapper = styled.div`
 `
 
 function Header({ onAddMovie }) {
+    const ctx = useContext(AppContext)
+
     return (
-        <HeaderContainer>
-            <HeaderBackground></HeaderBackground>
+        <HeaderContainer currentMovie={ctx.currentMovie}>
+            <HeaderBackground
+                currentMovie={ctx.currentMovie}
+            ></HeaderBackground>
             <HeaderContent>
                 <div
                     style={{
@@ -58,14 +65,26 @@ function Header({ onAddMovie }) {
                     }}
                 >
                     <Brand />
-                    <AddMovieButton onClick={() => onAddMovie()}>
-                        + Add movie
-                    </AddMovieButton>
+                    {ctx.currentMovie ? (
+                        <SearchButton
+                            onClick={() => ctx.onSetCurrentMovie(null)}
+                        >
+                            🔎
+                        </SearchButton>
+                    ) : (
+                        <AddMovieButton onClick={() => onAddMovie()}>
+                            + Add movie
+                        </AddMovieButton>
+                    )}
                 </div>
-                <SearchWrapper>
-                    <SearchLabel>Find your movie</SearchLabel>
-                    <Search />
-                </SearchWrapper>
+                {ctx.currentMovie ? (
+                    <Details />
+                ) : (
+                    <SearchWrapper>
+                        <SearchLabel>Find your movie</SearchLabel>
+                        <Search />
+                    </SearchWrapper>
+                )}
             </HeaderContent>
         </HeaderContainer>
     )

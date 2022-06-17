@@ -11,7 +11,7 @@ const Container = styled.div`
     flex-direction: column;
 `
 
-const Title = styled.div`
+export const Title = styled.div`
     color: #ffffff;
     text-transform: uppercase;
     font-size: 1.3rem;
