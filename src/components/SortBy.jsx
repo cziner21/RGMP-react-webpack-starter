@@ -17,32 +17,6 @@ const StyledLabel = styled.label`
 `
 
 function SortBy(props) {
-    const [filteredSortByOptions, setFilteredSortByOptions] = useState([])
-
-    useEffect(() => {
-        filterSortByOptions()
-    }, [])
-
-    useEffect(() => {
-        filterSortByOptions()
-    }, [props.selectedSortByOption])
-
-    const filterSortByOptions = () => {
-        if (!props.selectedSortByOption) {
-            setFilteredSortByOptions(sortByOptions)
-            return
-        }
-
-        const first = sortByOptions.find(
-            (x) => x.id === props.selectedSortByOption.id
-        )
-        const remainingOptions = sortByOptions.filter(
-            (x) => x.id !== props.selectedSortByOption.id
-        )
-
-        setFilteredSortByOptions([first, ...remainingOptions])
-    }
-
     if (!props.selectedSortByOption) {
         return null
     }
@@ -52,8 +26,8 @@ function SortBy(props) {
             <StyledLabel>Sort by</StyledLabel>
 
             <Select
-                selectedItem={props.selectedSortByOption.name}
-                items={filteredSortByOptions}
+                selectedItem={props.selectedSortByOption}
+                items={sortByOptions}
                 onItemClicked={(id) => props.onOptionSelected(id)}
             />
         </Container>

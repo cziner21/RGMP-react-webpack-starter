@@ -1,6 +1,6 @@
 export const sortByOptions = [
     {
-        id: 'name',
+        id: 'title',
         name: 'Name',
     },
     {

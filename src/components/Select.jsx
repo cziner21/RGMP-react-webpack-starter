@@ -66,12 +66,10 @@ const Select = ({ selectedItem, items, onItemClicked }) => {
         return null
     }
 
-    console.log(items)
-
     return (
         <Container ref={container}>
             <Selected onClick={() => setOpen(!open)}>
-                <span>{selectedItem}</span>
+                <span>{selectedItem.name}</span>
                 <Indicator isOpened={open} />
             </Selected>
             {open && (

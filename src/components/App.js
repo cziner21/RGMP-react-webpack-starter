@@ -34,7 +34,8 @@ const App = () => {
 
     const handleSortingChanged = (id) => {
         console.log(id)
-        setSelectedSortByOption(id)
+        setSelectedSortByOption(sortByOptions.find((x) => x.id === id))
+        console.log(orderBy(Movies, id))
         setFilteredMovies(orderBy(Movies, id))
     }
 
