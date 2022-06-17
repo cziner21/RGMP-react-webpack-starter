@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import { device } from '../shared/devices.js'
 import { Movie } from './Movie/Movie.jsx'
+import { AppContext } from './App.js'
 
 const ResultsContainer = styled.div`
     display: grid;
@@ -10,7 +11,10 @@ const ResultsContainer = styled.div`
     grid-column-gap: 1em;
     grid-row-gap: 2em;
     justify-items: center;
-    height: calc(100vh - 250px - 3em - 3em - 1.2em - 1.05em);
+    height: ${(props) =>
+        props.currentMovie
+            ? `calc(100vh - 350px - 3em - 3em - 1.2em - 1.05em)`
+            : `calc(100vh - 250px - 3em - 3em - 1.2em - 1.05em)`};
     overflow-y: auto;
     margin: 0 -3em;
     ::-webkit-scrollbar {
@@ -44,8 +48,10 @@ const ResultsContainer = styled.div`
 `
 
 function SearchResults({ movies, onEditMovie, onDeleteMovie }) {
+    const ctx = useContext(AppContext)
+
     return (
-        <ResultsContainer>
+        <ResultsContainer currentMovie={ctx.currentMovie}>
             {movies.map((item) => (
                 <Movie
                     key={item.id}

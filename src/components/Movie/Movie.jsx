@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
@@ -6,6 +6,8 @@ import CoverImage from './Image.jsx'
 import MovieTitle from './Title.jsx'
 import ReleaseDate from './ReleaseDate.jsx'
 import ContextMenu from './Menu.jsx'
+import MovieGenres from './Genres.jsx'
+import { AppContext } from '../App.js'
 
 const Container = styled.div`
     display: flex;
@@ -19,8 +21,15 @@ const Details = styled.div`
     flex-direction: column;
 `
 
-function Movie({ movie, coverPath, onEditMovie, onDeleteMovie }) {
+function Movie({
+    movie,
+    coverPath,
+    onEditMovie,
+    onDeleteMovie,
+    onMovieSelected,
+}) {
     const [isMenuVisible, setIsMenuVisible] = useState(false)
+    const ctx = useContext(AppContext)
 
     return (
         <Container
@@ -32,7 +41,7 @@ function Movie({ movie, coverPath, onEditMovie, onDeleteMovie }) {
                 onDelete={() => onDeleteMovie()}
                 isVisible={isMenuVisible}
             />
-            <CoverImage />
+            <CoverImage onClick={() => ctx.onSetCurrentMovie(movie)} />
             <div
                 style={{
                     display: 'flex',
@@ -48,13 +57,7 @@ function Movie({ movie, coverPath, onEditMovie, onDeleteMovie }) {
                             marginTop: '0.8em',
                         }}
                     >
-                        {movie.genres.map((genre, index) => (
-                            <span key={genre}>
-                                {index === movie.genres.length - 1
-                                    ? genre
-                                    : `${genre}, `}
-                            </span>
-                        ))}
+                        <MovieGenres genres={movie.genres} />
                     </div>
                 </Details>
                 <ReleaseDate>{movie.releaseDate}</ReleaseDate>

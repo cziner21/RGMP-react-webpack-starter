@@ -19,11 +19,16 @@ for (let i = 10; i < 30; i++) {
             0,
             getRandom(4, 0)
         ),
+        rating: getRandom(1, 9, true),
+        duration: getRandom(60, 300),
+        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis mi eget urna auctor ultrices id ac leo. Etiam vel mauris eu eros ultricies sodales. Proin posuere arcu in augue placerat consectetur. Donec in ante ornare, luctus lacus sit amet, mollis libero. Mauris tempor magna in laoreet ornare. Nullam imperdiet purus sit amet porttitor ultrices. Pellentesque habitant morbi tristique senectus.`,
     })
 }
 
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min
+function getRandom(min, max, withFraction = false) {
+    return withFraction
+        ? (Math.random() * (max - min + 1) + min).toFixed(1)
+        : Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 export { MovieData, Movies }

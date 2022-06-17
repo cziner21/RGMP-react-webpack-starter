@@ -11,7 +11,7 @@ const Button = styled.button`
     border: 2px solid #f65261;
     border-radius: 3px;
     text-transform: uppercase;
-    cursor: pointered;
+    cursor: pointer;
 `
 
 Button.propTypes = {
@@ -24,4 +24,9 @@ const AddMovieButton = styled(Button)`
     border: none;
 `
 
-export { Button, AddMovieButton }
+const SearchButton = styled(Button)`
+    background-color: transparent;
+    border: none;
+`
+
+export { Button, AddMovieButton, SearchButton }
