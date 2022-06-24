@@ -53,11 +53,11 @@ function Details() {
 
     return (
         <Wrapper>
-            <CoverImage />
+            <CoverImage imagePath={ctx.currentMovie.poster_path} />
             <Content>
                 <div className="flex align-items-center">
                     <Title>{ctx.currentMovie.title}</Title>
-                    <Rating>{ctx.currentMovie.rating}</Rating>
+                    <Rating>{ctx.currentMovie.vote_average}</Rating>
                 </div>
                 <MovieGenres genres={ctx.currentMovie.genres} />
                 <div
@@ -65,10 +65,10 @@ function Details() {
                         marginTop: '1em',
                     }}
                 >
-                    <ReleaseDate>{ctx.currentMovie.releaseDate}</ReleaseDate>
-                    <Duration>{ctx.currentMovie.duration} min</Duration>
+                    <ReleaseDate>{ctx.currentMovie.release_date}</ReleaseDate>
+                    <Duration>{ctx.currentMovie.runtime} min</Duration>
                 </div>
-                <Description>{ctx.currentMovie.description}</Description>
+                <Description>{ctx.currentMovie.overview}</Description>
             </Content>
         </Wrapper>
     )

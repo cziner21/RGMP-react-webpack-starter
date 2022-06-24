@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
+import { useDispatch } from 'react-redux'
+
+import {
+    setSearchParams,
+    defaultSearchParams,
+    setSelectedGenres,
+} from '../data/moviesSlice'
+
 import './app.css'
 import ErrorBoundary from './ErrorBoundary.jsx'
 import { Button, AddMovieButton } from './Button.jsx'
@@ -12,8 +20,9 @@ import { SearchResults } from './Results.jsx'
 import Modal from './Modal.jsx'
 import ManageMovie from './Movie/Manage.jsx'
 
-import Genres from '../data/genres'
-import { Movies } from '../data/movies'
+import { allGenres } from '../data/moviesSlice'
+
+import { Movies, getMovies } from '../data/movies'
 import { sortByOptions } from '../data/sortByOptions'
 import orderBy from '../shared/orderBy'
 
@@ -23,18 +32,43 @@ const App = () => {
     const [isModalOpened, setIsModalOpened] = useState(false)
     const [currentMovie, setCurrentMovie] = useState(null)
     const [isDeleting, setIsDeleting] = useState(false)
-    const [filteredMovies, setFilteredMovies] = useState([])
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        setSelectedGenre(Genres[0])
+        setSelectedGenre(allGenres[0])
         setSelectedSortByOption(sortByOptions[0])
-
-        setFilteredMovies(orderBy(Movies, sortByOptions[0].id))
     }, [])
 
     const handleSortingChanged = (id) => {
         setSelectedSortByOption(sortByOptions.find((x) => x.id === id))
-        setFilteredMovies(orderBy(Movies, id))
+    }
+
+    useEffect(() => {
+        if (!selectedSortByOption) {
+            return
+        }
+
+        dispatch(
+            setSearchParams({
+                ...defaultSearchParams,
+                sortBy: selectedSortByOption.id,
+                sortOrder: 'asc',
+            })
+        )
+    }, [selectedSortByOption])
+
+    const handleGenreSelect = (value) => {
+        setSelectedGenre(allGenres[value])
+
+        dispatch(setSelectedGenres([value]))
+
+        dispatch(
+            setSearchParams({
+                ...defaultSearchParams,
+                filter: value,
+            })
+        )
     }
 
     const handleAddMovieClick = () => {
@@ -84,13 +118,10 @@ const App = () => {
                         <ResultsFilter
                             selectedGenre={selectedGenre}
                             selectedSortByOption={selectedSortByOption}
-                            onSelectGenre={(index) =>
-                                setSelectedGenre(Genres[index])
-                            }
+                            onSelectGenre={(index) => handleGenreSelect(index)}
                             onOptionSelected={(id) => handleSortingChanged(id)}
                         ></ResultsFilter>
                         <SearchResults
-                            movies={filteredMovies}
                             onEditMovie={(id) => handleEditMovieClick(id)}
                             onDeleteMovie={(id) => handleDeleteMovieClick(id)}
                         />

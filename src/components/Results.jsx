@@ -1,5 +1,15 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux'
+
+import {
+    allMovies,
+    getMoviesError,
+    getMoviesStatus,
+    MoviesStatuses,
+    fetchMovies,
+    getSearchParams,
+} from '../data/moviesSlice.js'
 
 import { device } from '../shared/devices.js'
 import { Movie } from './Movie/Movie.jsx'
@@ -48,18 +58,57 @@ const ResultsContainer = styled.div`
 `
 
 function SearchResults({ movies, onEditMovie, onDeleteMovie }) {
+    const dispatch = useDispatch()
+    const moviesFromRedux = useSelector(allMovies)
+    const moviesStatus = useSelector(getMoviesStatus)
+    const error = useSelector(getMoviesError)
+    const searchParams = useSelector(getSearchParams)
+
     const ctx = useContext(AppContext)
 
-    return (
-        <ResultsContainer currentMovie={ctx.currentMovie}>
-            {movies.map((item) => (
+    useEffect(() => {
+        if (moviesStatus === MoviesStatuses.idle) {
+            dispatch(fetchMovies({}))
+        }
+    }, [moviesStatus, dispatch])
+
+    useEffect(() => {
+        console.log(searchParams)
+        dispatch(fetchMovies(searchParams))
+    }, [searchParams])
+
+    let content
+
+    switch (moviesStatus) {
+        case MoviesStatuses.loading: {
+            content = <p>Loading...</p>
+            break
+        }
+        case MoviesStatuses.succeeded: {
+            if (!moviesFromRedux) {
+                content = <p>Fetching data...</p>
+                break
+            }
+
+            content = moviesFromRedux.map((item) => (
                 <Movie
                     key={item.id}
                     movie={item}
                     onEditMovie={() => onEditMovie(item.id)}
                     onDeleteMovie={() => onDeleteMovie(item.id)}
                 />
-            ))}
+            ))
+            break
+        }
+        case MoviesStatuses.failed: {
+            content = <p>{error}</p>
+            break
+        }
+    }
+
+    return (
+        <ResultsContainer currentMovie={ctx.currentMovie}>
+            {content}
         </ResultsContainer>
     )
 }

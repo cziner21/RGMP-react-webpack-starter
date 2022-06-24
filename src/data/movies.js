@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 import PropTypes from 'prop-types'
 import Genres from './genres'
 
@@ -30,5 +32,89 @@ function getRandom(min, max, withFraction = false) {
         ? (Math.random() * (max - min + 1) + min).toFixed(1)
         : Math.floor(Math.random() * (max - min + 1)) + min
 }
+
+export const SearchParams = {}
+SearchParams.propTypes = {
+    setOrder: PropTypes.string.isRequired,
+    searchBy: PropTypes.string.isRequired,
+    offset: PropTypes.string,
+    limit: PropTypes.string,
+    search: PropTypes.string,
+    filter: PropTypes.arrayOf(PropTypes.string),
+    sortBy: PropTypes.string,
+}
+
+export async function getMovies(searchParams) {
+    const params = {
+        sortBy: searchParams.sortBy ? searchParams.sortBy : 'title',
+        setOrder: searchParams.isDescending ? 'desc' : 'asc',
+        search: searchParams.search ? searchParams.search : null,
+        searchBy: searchParams.searchBy ? searchParams.searchBy : null,
+        filter: searchParams.genres ? searchParams.genres : null,
+        offset: searchParams.offset ? searchParams.offset : null,
+        limit: searchParams.limit ? searchParams.limit : 10,
+    }
+
+    try {
+        const response = await axios.get('http://localhost:4000/movies', {
+            params: params,
+        })
+        console.log(response)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// export async function SearchMovies(keyword) {
+//     try {
+//         const response = await axios.get('http://localhost:4000/movies', {
+//             params: {
+//                 search: keyword,
+//             },
+//         })
+//         console.log(response)
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+// export async function SearchBy(type) {
+//     try {
+//         const response = await axios.get('http://localhost:4000/movies', {
+//             params: {
+//                 searchBy: type,
+//             },
+//         })
+//         console.log(response)
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+// export async function FilterByGenres(genres) {
+//     try {
+//         const response = await axios.get('http://localhost:4000/movies', {
+//             params: {
+//                 filter: genres,
+//             },
+//         })
+//         console.log(response)
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+// export async function SortBy(keyword) {
+//     try {
+//         const response = await axios.get('http://localhost:4000/movies', {
+//             params: {
+//                 sortBy: keyword,
+//             },
+//         })
+//         console.log(response)
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
 export { MovieData, Movies }

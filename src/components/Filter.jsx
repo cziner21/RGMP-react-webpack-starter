@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 
 import { SortBy } from './SortBy.jsx'
-import Genres from '../data/genres'
+
+import { allGenres, getSelectedGenres } from '../data/moviesSlice.js'
 
 const FilterWrapper = styled.div`
     display: flex;
@@ -14,13 +16,21 @@ const FilterWrapper = styled.div`
 
 const Genre = styled.span`
     text-transform: uppercase;
+    color: ${(props) => (props.isSelected ? '#f65261' : '#ffffff')};
 `
 
 function ResultsFilter(props) {
+    const genres = useSelector(allGenres)
+    const seletedGenres = useSelector(getSelectedGenres)
+
     return (
         <FilterWrapper>
-            {Genres.map((genre, index) => (
-                <Genre key={genre} onClick={() => props.onSelectGenre(index)}>
+            {genres.map((genre) => (
+                <Genre
+                    key={genre}
+                    isSelected={genre === seletedGenres[0]}
+                    onClick={() => props.onSelectGenre(genre)}
+                >
                     {genre}
                 </Genre>
             ))}
@@ -34,7 +44,7 @@ function ResultsFilter(props) {
 }
 
 ResultsFilter.PropTypes = {
-    selectedGenre: PropTypes.oneOf(Genres),
+    selectedGenre: PropTypes.oneOf(allGenres),
     selectedSortByOption: PropTypes.string.isRequired,
     onSelectGenre: PropTypes.func.isRequired,
     onOptionSelected: PropTypes.func.isRequired,
