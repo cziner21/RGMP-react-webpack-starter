@@ -1,5 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
+
+import { setSearchParams, defaultSearchParams } from '../data/moviesSlice'
 
 import StyledInput from './Input.jsx'
 import { Button } from './Button.jsx'
@@ -13,8 +16,17 @@ const SearchBar = styled.div`
 `
 
 function Search() {
+    const dispatch = useDispatch()
+
     const handleButtonClicked = (value) => {
         console.log(`Search button clicked ${value}`)
+        dispatch(
+            setSearchParams({
+                ...defaultSearchParams,
+                search: value,
+                searchBy: 'title',
+            })
+        )
     }
 
     return (

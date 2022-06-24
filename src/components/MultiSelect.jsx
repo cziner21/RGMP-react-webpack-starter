@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
+import { useSelector } from 'react-redux'
+
+import { allGenres } from '../data/moviesSlice'
+
 import useOutsideClickHandler from '../hooks/useOutsideClickHandler.jsx'
 import Checkbox from './Checkbox.jsx'
 
@@ -53,6 +57,9 @@ const Wrapper = styled.div`
 `
 
 const MultiSelect = ({}) => {
+    const genres = useSelector(allGenres)
+    const selectedGenres = useSelector()
+
     const [open, setOpen] = useState(false)
     const container = useRef(null)
 
@@ -70,16 +77,13 @@ const MultiSelect = ({}) => {
             </Selected>
             {open && (
                 <Wrapper>
-                    <Checkbox
-                        label={'Crime'}
-                        value={true}
-                        onChange={() => console.log('crime changed')}
-                    />
-                    <Checkbox
-                        label={'Drama'}
-                        value={false}
-                        onChange={() => console.log('drama changed')}
-                    />
+                    {genres.map((genre, index) => (
+                        <Checkbox
+                            label={genre}
+                            value={true}
+                            onChange={() => console.log(genre)}
+                        />
+                    ))}
                 </Wrapper>
             )}
         </Container>

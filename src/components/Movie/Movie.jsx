@@ -41,7 +41,10 @@ function Movie({
                 onDelete={() => onDeleteMovie()}
                 isVisible={isMenuVisible}
             />
-            <CoverImage onClick={() => ctx.onSetCurrentMovie(movie)} />
+            <CoverImage
+                imagePath={movie.poster_path}
+                onClick={() => ctx.onSetCurrentMovie(movie)}
+            />
             <div
                 style={{
                     display: 'flex',
@@ -60,7 +63,7 @@ function Movie({
                         <MovieGenres genres={movie.genres} />
                     </div>
                 </Details>
-                <ReleaseDate>{movie.releaseDate}</ReleaseDate>
+                <ReleaseDate>{movie.release_date.split('-')[0]}</ReleaseDate>
             </div>
         </Container>
     )

@@ -4,7 +4,15 @@ export const sortByOptions = [
         name: 'Name',
     },
     {
-        id: 'releaseDate',
+        id: 'release_date',
         name: 'Release date',
+    },
+    {
+        id: 'vote_average',
+        name: 'Ratings',
+    },
+    {
+        id: 'budget',
+        name: 'Budget',
     },
 ]
