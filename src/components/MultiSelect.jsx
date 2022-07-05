@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-
 import { useSelector } from 'react-redux'
+import { useField } from 'formik'
 
 import { allGenres } from '../data/moviesSlice'
 
@@ -17,6 +17,8 @@ const Container = styled.div`
     position: relative;
     display: flex;
     font-size: 0.8rem;
+    margin-top: 0.5em;
+    height: 37px;
 `
 
 const Selected = styled.div`
@@ -56,9 +58,10 @@ const Wrapper = styled.div`
     }
 `
 
-const MultiSelect = ({}) => {
+const MultiSelect = ({ currentMovieGenres, onItemClicked, ...props }) => {
+    const [field, meta] = useField(props)
+
     const genres = useSelector(allGenres)
-    const selectedGenres = useSelector()
 
     const [open, setOpen] = useState(false)
     const container = useRef(null)
@@ -70,23 +73,40 @@ const MultiSelect = ({}) => {
     useOutsideClickHandler(container, handleClickOutside)
 
     return (
-        <Container ref={container}>
-            <Selected onClick={() => setOpen(!open)}>
-                <span>Select Genre</span>
-                <Indicator isOpened={open} />
-            </Selected>
-            {open && (
-                <Wrapper>
-                    {genres.map((genre, index) => (
-                        <Checkbox
-                            label={genre}
-                            value={true}
-                            onChange={() => console.log(genre)}
-                        />
-                    ))}
-                </Wrapper>
+        <>
+            <Container ref={container}>
+                <Selected onClick={() => setOpen(!open)}>
+                    <span>Select Genre</span>
+                    <Indicator isOpened={open} />
+                </Selected>
+                {open && (
+                    <Wrapper>
+                        {genres.map((genre) => (
+                            <Checkbox
+                                key={genre}
+                                label={genre}
+                                value={
+                                    currentMovieGenres &&
+                                    currentMovieGenres.some((x) => x === genre)
+                                }
+                                onChange={() => onItemClicked(genre)}
+                            />
+                        ))}
+                    </Wrapper>
+                )}
+            </Container>
+            {meta.touched && meta.error && (
+                <div
+                    style={{
+                        color: '#f65261',
+                        fontSize: '0.7rem',
+                        marginTop: '0.25rem',
+                    }}
+                >
+                    {meta.error}
+                </div>
             )}
-        </Container>
+        </>
     )
 }
 

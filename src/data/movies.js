@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import PropTypes from 'prop-types'
+import PropTypes, { number } from 'prop-types'
 import Genres from './genres'
 
 const MovieData = {}
@@ -115,6 +115,21 @@ export async function getMovies(searchParams) {
 //     } catch (error) {
 //         console.log(error)
 //     }
+// }
+
+// const MovieBase = {}
+// MovieBase.PropTypes = {
+//     title: PropTypes.string.isRequired,
+//     tagline: PropTypes.string,
+//     vote_average: PropTypes.number,
+//     vote_count: PropTypes.number,
+//     release_date: PropTypes.string,
+//     poster_path: PropTypes.string,
+//     overview: PropTypes.string,
+//     budget: PropTypes.number,
+//     revenue: number,
+//     runtime: number,
+//     genres: PropTypes.arrayOf(PropTypes.string),
 // }
 
 export { MovieData, Movies }

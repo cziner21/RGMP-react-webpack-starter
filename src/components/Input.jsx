@@ -1,28 +1,43 @@
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useField } from 'formik'
 
 import KeyCodes from '../shared/keycodes'
 
 function StyledInput(props) {
-    const { type, name, placeholder, onEnterPressed } = props
+    const [field, meta, helpers] = useField(props)
 
-    const [value, setValue] = useState('')
+    const [currentValue, setCurrentValue] = useState('')
+
+    useEffect(() => {
+        setCurrentValue(props.value)
+    }, [])
 
     const handleChange = (e) => {
-        setValue(e.target.value)
+        setCurrentValue(e.target.value)
+
+        if (props.onHandleChange) {
+            props.onHandleChange(e)
+        }
     }
 
     const handleKeyDown = (e) => {
         if (e.keyCode === KeyCodes.Enter) {
-            console.log(value)
-            props.onEnterPressed(value)
+            console.log(currentValue)
+            props.onEnterPressed(currentValue)
+        }
+    }
+
+    const onHandleBlur = () => {
+        if (props.onBlur) {
+            props.onBlur(currentValue)
         }
     }
 
     const inputStyle = {
         backgroundColor: '#424242',
         border: 'solid 1px #424242',
-        color: value ? '#ffffff' : '#555555',
+        color: currentValue ? '#ffffff' : '#555555',
         borderRadius: '3px',
         padding: '0.75em',
         width: '100%',
@@ -30,24 +45,28 @@ function StyledInput(props) {
     }
 
     return (
-        <input
-            style={inputStyle}
-            placeholder={placeholder}
-            type={type}
-            name={name}
-            value={value}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-        />
+        <>
+            <input
+                {...field}
+                style={inputStyle}
+                placeholder={props.placeholder}
+                type={props.type}
+                name={props.name}
+                value={currentValue}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+                onBlur={onHandleBlur}
+            />
+        </>
     )
 }
 
-StyledInput.PropTypes = {
-    name: PropTypes.string,
-    type: PropTypes.string,
-    id: PropTypes.string,
-    placeholder: PropTypes.string,
-    onEnterPressed: PropTypes.func,
-}
+// StyledInput.PropTypes = {
+//     name: PropTypes.string,
+//     type: PropTypes.string,
+//     id: PropTypes.string,
+//     placeholder: PropTypes.string,
+//     onEnterPressed: PropTypes.func,
+// }
 
 export default StyledInput

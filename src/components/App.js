@@ -6,6 +6,7 @@ import {
     setSearchParams,
     defaultSearchParams,
     setSelectedGenres,
+    setSelectedMovieId,
 } from '../data/moviesSlice'
 
 import './app.css'
@@ -76,6 +77,8 @@ const App = () => {
             return
         }
 
+        dispatch(setSelectedMovieId(null))
+
         setIsDeleting(false)
         setCurrentMovie(null)
         setIsModalOpened(true)
@@ -85,6 +88,9 @@ const App = () => {
         if (isModalOpened) {
             return
         }
+
+        // --- Set selected movie id to global store
+        dispatch(setSelectedMovieId(id))
 
         const currentMovie = Movies.find((x) => x.id === id)
 
@@ -98,7 +104,8 @@ const App = () => {
             return
         }
 
-        const currentMovie = Movies.find((x) => x.id === id)
+        // --- Set selected movie id to global store
+        dispatch(setSelectedMovieId(id))
 
         setIsDeleting(true)
         setIsModalOpened(true)
@@ -131,10 +138,7 @@ const App = () => {
                         onHandleClose={() => setIsModalOpened(false)}
                         isOpen={isModalOpened}
                     >
-                        <ManageMovie
-                            movie={currentMovie}
-                            isDeleting={isDeleting}
-                        />
+                        <ManageMovie isDeleting={isDeleting} />
                     </Modal>
                 </div>
             </AppContext.Provider>

@@ -35,7 +35,7 @@ const CloseButton = styled.div`
     align-items: center;
     justify-content: center;
     top: 0.5em;
-    right: 0.5em;
+    right: 1.2em;
     position: absolute;
     font-size: 1.2rem;
     font-wight: 600;

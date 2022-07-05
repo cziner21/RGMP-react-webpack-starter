@@ -9,6 +9,7 @@ import {
     MoviesStatuses,
     fetchMovies,
     getSearchParams,
+    getSelectedMovieId,
 } from '../data/moviesSlice.js'
 
 import { device } from '../shared/devices.js'
@@ -73,7 +74,6 @@ function SearchResults({ movies, onEditMovie, onDeleteMovie }) {
     }, [moviesStatus, dispatch])
 
     useEffect(() => {
-        console.log(searchParams)
         dispatch(fetchMovies(searchParams))
     }, [searchParams])
 
