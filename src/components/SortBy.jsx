@@ -3,60 +3,39 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { sortByOptions } from '../data/sortByOptions'
+import Select from './Select.jsx'
+
+const Container = styled.div`
+    display: flex;
+    align-items: center;
+`
 
 const StyledLabel = styled.label`
     text-transform: uppercase;
     color: #555555;
-    margin-right: 2em;
+    margin-right: 1em;
 `
 
 function SortBy(props) {
-    const [filteredSortByOptions, setFilteredSortByOptions] = useState([])
-
-    useEffect(() => {
-        filterSortByOptions()
-    }, [])
-
-    useEffect(() => {
-        filterSortByOptions()
-    }, [props.selectedSortByOption])
-
-    const filterSortByOptions = () => {
-        if (!props.selectedSortByOption) {
-            setFilteredSortByOptions(sortByOptions)
-            return
-        }
-
-        const first = sortByOptions.find(
-            (x) => x.id === props.selectedSortByOption
-        )
-        const remainingOptions = sortByOptions.filter(
-            (x) => x.id !== props.selectedSortByOption
-        )
-
-        setFilteredSortByOptions([first, ...remainingOptions])
+    if (!props.selectedSortByOption) {
+        return null
     }
 
     return (
-        <div>
+        <Container>
             <StyledLabel>Sort by</StyledLabel>
-            <select name="sort-by">
-                {filteredSortByOptions.map((x) => (
-                    <option
-                        key={x.id}
-                        value={x.id}
-                        onClick={props.onOptionSelected(x.id)}
-                    >
-                        {x.name}
-                    </option>
-                ))}
-            </select>
-        </div>
+
+            <Select
+                selectedItem={props.selectedSortByOption}
+                items={sortByOptions}
+                onItemClicked={(id) => props.onOptionSelected(id)}
+            />
+        </Container>
     )
 }
 
 SortBy.PropTypes = {
-    selectedSortByOption: PropTypes.string.isRequired,
+    selectedSortByOption: PropTypes.any.isRequired,
     onOptionSelected: PropTypes.func.isRequired,
 }
 

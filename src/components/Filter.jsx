@@ -9,6 +9,7 @@ const FilterWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 1em;
+    align-items: center;
 `
 
 const Genre = styled.span`
@@ -26,7 +27,7 @@ function ResultsFilter(props) {
 
             <SortBy
                 onOptionSelected={(id) => props.onOptionSelected(id)}
-                selectedSortByOption={'name'}
+                selectedSortByOption={props.selectedSortByOption}
             />
         </FilterWrapper>
     )

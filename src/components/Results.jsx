@@ -10,7 +10,7 @@ const ResultsContainer = styled.div`
     grid-column-gap: 1em;
     grid-row-gap: 2em;
     justify-items: center;
-    height: calc(100vh - 250px - 3em - 3em - 2.2em);
+    height: calc(100vh - 250px - 3em - 3em - 1.2em - 1.05em);
     overflow-y: auto;
     margin: 0 -3em;
     ::-webkit-scrollbar {
@@ -43,80 +43,17 @@ const ResultsContainer = styled.div`
     }
 `
 
-function SearchResults() {
+function SearchResults({ movies, onEditMovie, onDeleteMovie }) {
     return (
         <ResultsContainer>
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
-
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
-
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
-
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
-
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
-
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
-
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
-
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
-
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
-
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
-
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
-
-            <Movie
-                title="Pulp Fiction"
-                genre={['Drama', 'Crime']}
-                releaseDate={1994}
-            />
+            {movies.map((item) => (
+                <Movie
+                    key={item.id}
+                    movie={item}
+                    onEditMovie={() => onEditMovie(item.id)}
+                    onDeleteMovie={() => onDeleteMovie(item.id)}
+                />
+            ))}
         </ResultsContainer>
     )
 }

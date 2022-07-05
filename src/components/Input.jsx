@@ -19,19 +19,23 @@ function StyledInput(props) {
         }
     }
 
+    const inputStyle = {
+        backgroundColor: '#424242',
+        border: 'solid 1px #424242',
+        color: value ? '#ffffff' : '#555555',
+        borderRadius: '3px',
+        padding: '0.75em',
+        width: '100%',
+        outline: 'none',
+    }
+
     return (
         <input
-            style={{
-                backgroundColor: '#424242',
-                border: 'solid 1px #424242',
-                color: '#555555',
-                borderRadius: '3px',
-                padding: '0.75em',
-                width: '100%',
-            }}
+            style={inputStyle}
             placeholder={placeholder}
             type={type}
             name={name}
+            value={value}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
         />

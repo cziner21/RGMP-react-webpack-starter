@@ -1,10 +1,10 @@
 export const sortByOptions = [
     {
-        id: 'releaseDate',
-        name: 'Release date',
+        id: 'title',
+        name: 'Name',
     },
     {
-        id: 'name',
-        name: 'Name',
+        id: 'releaseDate',
+        name: 'Release date',
     },
 ]
