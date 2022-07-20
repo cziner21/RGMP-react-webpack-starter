@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 
 import {
     allMovies,
@@ -8,13 +9,15 @@ import {
     getMoviesStatus,
     MoviesStatuses,
     fetchMovies,
-    getSearchParams,
-    getSelectedMovieId,
+    getSearchQuery,
+    setSelectedGenres,
+    getMovie,
+    getMoviesType,
 } from '../data/moviesSlice.js'
 
 import { device } from '../shared/devices.js'
 import { Movie } from './Movie/Movie.jsx'
-import { AppContext } from './App.js'
+import { AppContext } from './MainLayout.jsx'
 
 const ResultsContainer = styled.div`
     display: grid;
@@ -58,24 +61,62 @@ const ResultsContainer = styled.div`
     }
 `
 
-function SearchResults({ movies, onEditMovie, onDeleteMovie }) {
+function SearchResults() {
     const dispatch = useDispatch()
     const moviesFromRedux = useSelector(allMovies)
     const moviesStatus = useSelector(getMoviesStatus)
+    const isSingleMovie = useSelector(getMoviesType)
     const error = useSelector(getMoviesError)
-    const searchParams = useSelector(getSearchParams)
+    const searchQuery = useSelector(getSearchQuery)
 
     const ctx = useContext(AppContext)
 
-    useEffect(() => {
-        if (moviesStatus === MoviesStatuses.idle) {
-            dispatch(fetchMovies({}))
-        }
-    }, [moviesStatus, dispatch])
+    const [searchParams, setSearchParams] = useSearchParams()
+    const movieTitle = searchParams.get('title') || ''
+    const movieId = searchParams.get('movie') || ''
+    const movieGenre = searchParams.get('genre') || ''
+    const movieSortBy = searchParams.get('sortBy') || ''
+    const movieSortOrder = searchParams.get('order') || 'asc'
 
     useEffect(() => {
-        dispatch(fetchMovies(searchParams))
-    }, [searchParams])
+        if (moviesStatus === MoviesStatuses.idle && !isSingleMovie) {
+            dispatch(fetchMovies({}))
+            return
+        }
+
+        if (moviesStatus === MoviesStatuses.idle && isSingleMovie) {
+            dispatch(getMovie(movieId))
+            return
+        }
+    }, [moviesStatus, isSingleMovie, movieId, dispatch])
+
+    useEffect(() => {
+        // If there are search parameters in URL we use them, otherwise we use the parameters from redux
+        let query = { ...searchQuery }
+
+        if (movieTitle.length > 0) {
+            query.search = movieTitle
+            query.searchBy = 'title'
+        }
+
+        if (movieGenre.length > 0) {
+            query.filter = movieGenre
+
+            dispatch(setSelectedGenres([movieGenre]))
+        }
+
+        if (movieSortBy.length > 0) {
+            query.sortBy = movieSortBy
+            query.sortOrder = movieSortOrder
+        }
+
+        if (movieId.length > 0) {
+            dispatch(getMovie(movieId))
+            return
+        }
+
+        dispatch(fetchMovies(query))
+    }, [searchQuery, movieTitle, movieId, movieGenre, movieSortBy])
 
     let content
 
@@ -90,12 +131,28 @@ function SearchResults({ movies, onEditMovie, onDeleteMovie }) {
                 break
             }
 
+            if (isSingleMovie) {
+                content = (
+                    <Movie
+                        key={moviesFromRedux.id}
+                        movie={moviesFromRedux}
+                        onEditMovie={() =>
+                            ctx.onHandleEditMovieClick(moviesFromRedux.id)
+                        }
+                        onDeleteMovie={() =>
+                            ctx.onHandleDeleteMovieClick(moviesFromRedux.id)
+                        }
+                    />
+                )
+                break
+            }
+
             content = moviesFromRedux.map((item) => (
                 <Movie
                     key={item.id}
                     movie={item}
-                    onEditMovie={() => onEditMovie(item.id)}
-                    onDeleteMovie={() => onDeleteMovie(item.id)}
+                    onEditMovie={() => ctx.onHandleEditMovieClick(item.id)}
+                    onDeleteMovie={() => ctx.onHandleDeleteMovieClick(item.id)}
                 />
             ))
             break

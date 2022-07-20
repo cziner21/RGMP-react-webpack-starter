@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 
 import { SortBy } from './SortBy.jsx'
+import { AppContext } from './MainLayout.jsx'
 
 import { allGenres, getSelectedGenres } from '../data/moviesSlice.js'
 
@@ -19,9 +19,11 @@ const Genre = styled.span`
     color: ${(props) => (props.isSelected ? '#f65261' : '#ffffff')};
 `
 
-function ResultsFilter(props) {
+function ResultsFilter() {
     const genres = useSelector(allGenres)
     const seletedGenres = useSelector(getSelectedGenres)
+
+    const ctx = useContext(AppContext)
 
     return (
         <FilterWrapper>
@@ -29,25 +31,18 @@ function ResultsFilter(props) {
                 <Genre
                     key={genre}
                     isSelected={genre === seletedGenres[0]}
-                    onClick={() => props.onSelectGenre(genre)}
+                    onClick={() => ctx.onHandleGenreSelect(genre)}
                 >
                     {genre}
                 </Genre>
             ))}
 
             <SortBy
-                onOptionSelected={(id) => props.onOptionSelected(id)}
-                selectedSortByOption={props.selectedSortByOption}
+                onOptionSelected={(id) => ctx.onHandleSortingChanged(id)}
+                selectedSortByOption={ctx.selectedSortByOption}
             />
         </FilterWrapper>
     )
-}
-
-ResultsFilter.PropTypes = {
-    selectedGenre: PropTypes.oneOf(allGenres),
-    selectedSortByOption: PropTypes.string.isRequired,
-    onSelectGenre: PropTypes.func.isRequired,
-    onOptionSelected: PropTypes.func.isRequired,
 }
 
 export { ResultsFilter }

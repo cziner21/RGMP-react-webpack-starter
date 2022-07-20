@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import CoverImage from './Image.jsx'
-import { AppContext } from '../App.js'
+import { AppContext } from '../MainLayout.jsx'
 
 import { Title } from './Manage.jsx'
 import MovieGenres from './Genres.jsx'

@@ -7,7 +7,7 @@ import MovieTitle from './Title.jsx'
 import ReleaseDate from './ReleaseDate.jsx'
 import ContextMenu from './Menu.jsx'
 import MovieGenres from './Genres.jsx'
-import { AppContext } from '../App.js'
+import { AppContext } from '../MainLayout.jsx'
 
 const Container = styled.div`
     display: flex;

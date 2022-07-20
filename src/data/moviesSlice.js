@@ -24,9 +24,10 @@ export const defaultSearchParams = {
 const initialState = {
     data: [],
     genres: [],
-    searchParams: defaultSearchParams,
+    searchQuery: defaultSearchParams,
     selectedGenres: [],
     selectedMovieId: null,
+    isSingleMovie: false,
     status: MoviesStatuses.idle, // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null,
     currentMovie: {},
@@ -92,12 +93,21 @@ export const deleteMovie = createAsyncThunk(
     }
 )
 
+export const getMovie = createAsyncThunk('movies/getMovie', async (id) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/${id}`)
+        return response.data
+    } catch (error) {
+        return error.message
+    }
+})
+
 const moviesSlice = createSlice({
     name: 'movies',
     initialState: initialState,
     reducers: {
-        setSearchParams: (state, action) => {
-            state.searchParams = action.payload
+        setSearchQuery: (state, action) => {
+            state.searchQuery = action.payload
         },
         setSelectedGenres: (state, action) => {
             state.selectedGenres = action.payload
@@ -110,10 +120,12 @@ const moviesSlice = createSlice({
         builder
             .addCase(fetchMovies.pending, (state, action) => {
                 state.status = MoviesStatuses.loading
+                state.isSingleMovie = false
             })
             .addCase(fetchMovies.fulfilled, (state, action) => {
                 const { totalAmount, data } = action.payload
                 state.status = MoviesStatuses.succeeded
+                state.isSingleMovie = false
                 state.data = data
 
                 const genres = data
@@ -125,7 +137,34 @@ const moviesSlice = createSlice({
             })
             .addCase(fetchMovies.rejected, (state, action) => {
                 state.status = MoviesStatuses.failed
+                state.isSingleMovie = false
                 state.error = action.error.message
+            })
+            .addCase(getMovie.pending, (state, action) => {
+                state.status = MoviesStatuses.loading
+                state.isSingleMovie = true
+            })
+            .addCase(getMovie.fulfilled, (state, action) => {
+                const data = action.payload
+                state.status = MoviesStatuses.succeeded
+                state.isSingleMovie = true
+                state.selectedMovieId = data.id
+
+                state.data = data
+
+                if (data) {
+                    const genres = data.genres
+                        .map((x) => x)
+                        .reduce((a, b) => {
+                            return a.concat(b)
+                        }, [])
+                    state.genres = Array.from(new Set(genres))
+                }
+            })
+            .addCase(getMovie.rejected, (state, action) => {
+                state.status = MoviesStatuses.failed
+                state.error = action.error.message
+                state.isSingleMovie = true
             })
             .addCase(updateMovie.fulfilled, (state, action) => {
                 console.log(action.payload)
@@ -153,14 +192,15 @@ const moviesSlice = createSlice({
 
 export const getSelectedMovieId = (state) => state.movies.selectedMovieId
 export const getSelectedGenres = (state) => state.movies.selectedGenres
-export const getSearchParams = (state) => state.movies.searchParams
+export const getSearchQuery = (state) => state.movies.searchQuery
 export const allMovies = (state) => state.movies.data
 export const allGenres = (state) => state.movies.genres
 export const currentMovie = (state) => state.movies.currentMovie
 export const getMoviesStatus = (state) => state.movies.status
+export const getMoviesType = (state) => state.movies.isSingleMovie
 export const getMoviesError = (state) => state.movies.error
 
-export const { setSearchParams, setSelectedGenres, setSelectedMovieId } =
+export const { setSearchQuery, setSelectedGenres, setSelectedMovieId } =
     moviesSlice.actions
 
 export default moviesSlice.reducer
