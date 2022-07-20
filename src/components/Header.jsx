@@ -7,7 +7,7 @@ import Brand from './Brand.jsx'
 import Details from './Movie/Details.jsx'
 import { device } from '../shared/devices.js'
 import img from '../../asetts/movieposters.jpg'
-import { AppContext } from './App.js'
+import { AppContext } from './MainLayout.jsx'
 
 const HeaderContainer = styled.div`
     display: flex;

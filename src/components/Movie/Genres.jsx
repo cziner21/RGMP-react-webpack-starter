@@ -1,7 +1,7 @@
 import React from 'react'
 
 function MovieGenres({ genres }) {
-    if (genres.length < 1) {
+    if (!genres || genres.length < 1) {
         return null
     }
 
