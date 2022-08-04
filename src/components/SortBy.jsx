@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { sortByOptions } from '../data/sortByOptions'
-import Select from './Select.jsx'
+import Select from './Select/Select.jsx'
 
 const Container = styled.div`
     display: flex;

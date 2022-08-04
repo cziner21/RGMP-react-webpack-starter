@@ -1,5 +1,5 @@
 const { merge } = require('webpack-merge')
-const commonConfig = require('./webpack.common')
+const commonConfig = require('./webpack.config')
 const { EnvironmentPlugin } = require('webpack')
 
 const prodConfig = {

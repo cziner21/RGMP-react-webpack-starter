@@ -20,6 +20,7 @@ import {
 import { device } from '../shared/devices.js'
 import { Movie } from './Movie/Movie.jsx'
 import { AppContext } from './MainLayout.jsx'
+import Count from './Count.jsx'
 
 const ResultsContainer = styled.div`
     display: grid;
@@ -30,7 +31,7 @@ const ResultsContainer = styled.div`
     height: ${(props) =>
         props.currentMovie
             ? `calc(100vh - 350px - 3em - 3em - 1.2em - 1.05em)`
-            : `calc(100vh - 250px - 3em - 3em - 1.2em - 1.05em)`};
+            : `calc(100vh - 250px - 3em - 3em - 1.2em - 1.05em - 1.4rem)`};
     overflow-y: auto;
     margin: 0 -3em;
     ::-webkit-scrollbar {
@@ -166,9 +167,12 @@ function SearchResults() {
     }
 
     return (
-        <ResultsContainer currentMovie={ctx.currentMovie}>
-            {content}
-        </ResultsContainer>
+        <>
+            <Count numberOfMovies={moviesFromRedux.length} />
+            <ResultsContainer currentMovie={ctx.currentMovie}>
+                {content}
+            </ResultsContainer>
+        </>
     )
 }
 

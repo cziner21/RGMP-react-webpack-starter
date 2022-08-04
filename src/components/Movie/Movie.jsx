@@ -44,6 +44,7 @@ function Movie({
             <CoverImage
                 imagePath={movie.poster_path}
                 onClick={() => ctx.onSetCurrentMovie(movie)}
+                data-cy={`cover-image__${movie.id}`}
             />
             <div
                 style={{
