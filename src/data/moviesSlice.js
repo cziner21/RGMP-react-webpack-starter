@@ -146,6 +146,14 @@ const moviesSlice = createSlice({
             })
             .addCase(getMovie.fulfilled, (state, action) => {
                 const data = action.payload
+
+                // Request failed with status code 404
+                if (data === 'Request failed with status code 404') {
+                    state.status = MoviesStatuses.failed
+                    state.error = data
+                    return
+                }
+
                 state.status = MoviesStatuses.succeeded
                 state.isSingleMovie = true
                 state.selectedMovieId = data.id

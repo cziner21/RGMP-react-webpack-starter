@@ -137,6 +137,11 @@ const MainLayout = () => {
 
     const handleSetCurrentMovie = (movie) => {
         setCurrentMovie(movie)
+
+        if (movie) {
+            setSearchParams({ movie: movie.id })
+        }
+
         if (!movie) {
             dispatch(setSelectedMovieId(null))
             navigate('/search')

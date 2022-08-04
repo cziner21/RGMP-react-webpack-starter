@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 
+import NotFound from './404.jsx'
+
 import {
     allMovies,
     getMoviesError,
@@ -157,10 +159,10 @@ function SearchResults() {
             ))
             break
         }
-        case MoviesStatuses.failed: {
-            content = <p>{error}</p>
-            break
-        }
+    }
+
+    if (moviesStatus === MoviesStatuses.failed) {
+        return <NotFound message={error} />
     }
 
     return (

@@ -15,10 +15,10 @@ const Message = styled.div`
     font-size: 2rem;
 `
 
-const NotFound = () => {
+const NotFound = ({ message }) => {
     return (
         <Container>
-            <Message>404 - Nincs megjeleníthető adat</Message>
+            <Message>{message}</Message>
         </Container>
     )
 }
