@@ -7,7 +7,7 @@ import { useSearchParams } from 'react-router-dom'
 import { setSearchQuery, defaultSearchParams } from '../data/moviesSlice'
 
 import StyledInput from './Input.jsx'
-import { Button } from './Button.jsx'
+import { Button } from './Button/Button.jsx'
 import { useEffect } from 'react'
 
 const SearchBar = styled.div`

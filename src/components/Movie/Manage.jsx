@@ -12,9 +12,9 @@ import {
     deleteMovie,
 } from '../../data/moviesSlice'
 
-import { Button } from '../Button.jsx'
+import { Button } from '../Button/Button.jsx'
 import StyledInput from '../Input.jsx'
-import StyledLabel from '../Label.jsx'
+import StyledLabel from '../Label/Label.jsx'
 import MultiSelect from '../MultiSelect.jsx'
 import { FormInput } from '../FormInput.jsx'
 import { FormTextArea } from '../FormTextArea.jsx'

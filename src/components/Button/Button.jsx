@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-const Button = styled.button`
+const Button = styled.button.attrs((props) => ({
+    'data-testid': props.testId,
+}))`
     background-color: ${(props) =>
         props.secondary ? 'transparent' : '#f65261'};
     color: ${(props) => (props.secondary ? '#f65261' : '#ffffff')};

@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Brand component test should contain text "netflix" 1`] = `
+<div
+  className="sc-bczRLJ jQKpnh"
+>
+  <strong>
+    netflix
+  </strong>
+  roulette
+</div>
+`;
+
+exports[`Brand component test should renders correctly 1`] = `
+<div
+  className="sc-bczRLJ jQKpnh"
+>
+  <strong>
+    netflix
+  </strong>
+  roulette
+</div>
+`;
