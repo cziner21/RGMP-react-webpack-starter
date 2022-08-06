@@ -4,10 +4,10 @@ import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
 import { useSearchParams } from 'react-router-dom'
 
-import { setSearchQuery, defaultSearchParams } from '../data/moviesSlice'
+import { setSearchQuery, defaultSearchParams } from '../../data/moviesSlice'
 
-import StyledInput from './Input.jsx'
-import { Button } from './Button/Button.jsx'
+import StyledInput from '../Input.jsx'
+import { Button } from '../Button/Button.jsx'
 import { useEffect } from 'react'
 
 const SearchBar = styled.div`
@@ -66,7 +66,7 @@ function Search() {
                     />
                 </Form>
             </Formik>
-            <Button onClick={() => handleButtonClicked()}>Search</Button>
+            <Button data-testid={'search-button'} onClick={() => handleButtonClicked()}>Search</Button>
         </SearchBar>
     )
 }

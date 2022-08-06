@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 
-import NotFound from './404.jsx'
+import NotFound from '../404.jsx'
 
 import {
     allMovies,
@@ -15,12 +15,12 @@ import {
     setSelectedGenres,
     getMovie,
     getMoviesType,
-} from '../data/moviesSlice.js'
+} from '../../data/moviesSlice.js'
 
-import { device } from '../shared/devices.js'
-import { Movie } from './Movie/Movie.jsx'
-import { AppContext } from './MainLayout.jsx'
-import Count from './Count.jsx'
+import { device } from '../../shared/devices.js'
+import { Movie } from '../Movie/Movie.jsx'
+import { AppContext } from '../MainLayout.jsx'
+import Count from '../Count.jsx'
 
 const ResultsContainer = styled.div`
     display: grid;
