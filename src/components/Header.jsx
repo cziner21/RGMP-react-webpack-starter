@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 
-import { Button, AddMovieButton, SearchButton } from './Button.jsx'
-import Search from './Search.jsx'
-import Brand from './Brand.jsx'
+import { AddMovieButton, SearchButton } from './Button/Button.jsx'
+import Search from './Search/Search.jsx'
+import Brand from './Brand/Brand.jsx'
 import Details from './Movie/Details.jsx'
 import { device } from '../shared/devices.js'
 import img from '../../asetts/movieposters.jpg'

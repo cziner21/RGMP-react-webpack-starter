@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search panel interactive tests Renders and match snapshot 1`] = `
+<div
+  className="sc-hKMtZM jYQeGD"
+>
+  <form
+    action="#"
+    onReset={[Function]}
+    onSubmit={[Function]}
+    style={
+      Object {
+        "display": "contents",
+      }
+    }
+  >
+    <input
+      name="search"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      placeholder="What do you want to watch?"
+      style={
+        Object {
+          "backgroundColor": "#424242",
+          "border": "solid 1px #424242",
+          "borderRadius": "3px",
+          "color": "#555555",
+          "outline": "none",
+          "padding": "0.75em",
+          "width": "100%",
+        }
+      }
+      value=""
+    />
+  </form>
+  <button
+    className="sc-bczRLJ jIzewS"
+    onClick={[Function]}
+  >
+    Search
+  </button>
+</div>
+`;

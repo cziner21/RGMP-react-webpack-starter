@@ -1,7 +1,7 @@
 import React from 'react'
 import { useField } from 'formik'
 
-import StyledLabel from './Label.jsx'
+import StyledLabel from './Label/Label.jsx'
 import { FormControl } from './Movie/Manage.jsx'
 
 export const FormTextArea = ({ placeholder, label, isRequired, ...props }) => {

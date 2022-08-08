@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
-import useOutsideClickHandler from '../hooks/useOutsideClickHandler.jsx'
+import useOutsideClickHandler from '../../hooks/useOutsideClickHandler.jsx'
 
 const Container = styled.div`
     background-color: #424242;

@@ -18,6 +18,7 @@ const Checkbox = ({ label, value, onChange }) => {
                 type="checkbox"
                 checked={value}
                 onChange={onChange}
+                data-testid="checkbox"
             />
             {label}
         </StyledLabel>

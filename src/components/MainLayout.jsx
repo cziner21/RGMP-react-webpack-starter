@@ -18,7 +18,7 @@ import './app.css'
 import ErrorBoundary from './ErrorBoundary.jsx'
 
 import Header from './Header.jsx'
-import Footer from './Footer.jsx'
+import Footer from './Footer/Footer.jsx'
 
 import Modal from './Modal.jsx'
 import ManageMovie from './Movie/Manage.jsx'

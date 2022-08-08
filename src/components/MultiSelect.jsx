@@ -6,7 +6,7 @@ import { useField } from 'formik'
 import { allGenres } from '../data/moviesSlice'
 
 import useOutsideClickHandler from '../hooks/useOutsideClickHandler.jsx'
-import Checkbox from './Checkbox.jsx'
+import Checkbox from './CheckBox/Checkbox.jsx'
 
 const Container = styled.div`
     background-color: #424242;

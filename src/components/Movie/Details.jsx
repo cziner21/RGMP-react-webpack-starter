@@ -68,7 +68,9 @@ function Details() {
                     <ReleaseDate>{ctx.currentMovie.release_date}</ReleaseDate>
                     <Duration>{ctx.currentMovie.runtime} min</Duration>
                 </div>
-                <Description>{ctx.currentMovie.overview}</Description>
+                <Description data-cy="movie-description">
+                    {ctx.currentMovie.overview}
+                </Description>
             </Content>
         </Wrapper>
     )
