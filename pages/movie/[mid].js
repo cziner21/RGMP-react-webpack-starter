@@ -1,7 +1,11 @@
 import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import axios from 'axios'
 
+import { BASE_URL } from '../api/moviesSlice'
+
+import NotFound from '../../components/404/404'
 import { AppContext } from '../../components/mainLayout/mainLayout'
 import Container from '../../components/container/container'
 import CoverImage from '../../components/movie/image/image'
@@ -49,36 +53,61 @@ const Description = styled.div`
     margin-top: 1em;
 `
 
-const MoviePage = () => {
-    const ctx = useContext(AppContext)
+const getMovie = async (id = 333371) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/${id}`)
+        return response.data
+    } catch (error) {
+        return error.message
+    }
+}
+
+export async function getServerSideProps(context) {
+    const { params } = context
+    let response = await getMovie(333371)
+
+    if (!response || !response.data) {
+        return {
+            props: {
+                data: null,
+            },
+        }
+    }
+
+    return {
+        props: {
+            data: response.data,
+        },
+    }
+}
+
+const MoviePage = ({ data }) => {
     const { query } = useRouter()
 
-    if (!ctx.currentMovie) {
-        return <></>
+    if (!data) {
+        return <NotFound />
     }
 
     return (
         <Container>
             <Wrapper>
-                <CoverImage imagePath={ctx.currentMovie.poster_path} />
+                <CoverImage imagePath={data?.poster_path} />
                 <Content>
                     <div className="flex align-items-center">
-                        <Title>{ctx.currentMovie.title}</Title>
-                        <Rating>{ctx.currentMovie.vote_average}</Rating>
+                        <Title>{data?.title}</Title>
+                        <Rating>{data?.vote_average}</Rating>
                     </div>
-                    <MovieGenres genres={ctx.currentMovie.genres} />
+                    <MovieGenres genres={data?.genres} />
                     <div
                         style={{
                             marginTop: '1em',
                         }}
                     >
-                        <ReleaseDate>
-                            {ctx.currentMovie.release_date}
-                        </ReleaseDate>
-                        <Duration>{ctx.currentMovie.runtime} min</Duration>
+                        <ReleaseDate>{data?.release_date}</ReleaseDate>
+                        <Duration>{data?.runtime} min</Duration>
                     </div>
                     <Description data-cy="movie-description">
-                        {ctx.currentMovie.overview}
+                        {data?.overview}
                     </Description>
                 </Content>
             </Wrapper>

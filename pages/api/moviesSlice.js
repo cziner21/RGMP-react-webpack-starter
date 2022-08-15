@@ -9,7 +9,7 @@ export const MoviesStatuses = {
     failed: 'failed',
 }
 
-const BASE_URL = 'http://localhost:4000/movies'
+export const BASE_URL = 'http://localhost:4000/movies'
 
 export const defaultSearchParams = {
     sortBy: 'title',
