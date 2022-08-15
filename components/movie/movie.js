@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import Link from 'next/link'
 
 import CoverImage from './image/image'
 import MovieTitle from './title/title'
@@ -35,11 +36,13 @@ function Movie({ movie, onEditMovie, onDeleteMovie }) {
                 onDelete={() => onDeleteMovie()}
                 isVisible={isMenuVisible}
             />
-            <CoverImage
-                imagePath={movie.poster_path}
-                onClick={() => ctx.onSetCurrentMovie(movie)}
-                data-cy={`cover-image__${movie.id}`}
-            />
+            <Link href={`/movie/${movie.id}`}>
+                <CoverImage
+                    imagePath={movie.poster_path}
+                    onClick={() => ctx.onSetCurrentMovie(movie)}
+                    data-cy={`cover-image__${movie.id}`}
+                />
+            </Link>
             <div
                 style={{
                     display: 'flex',

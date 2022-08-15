@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 import Router, { useRouter } from 'next/router'
@@ -134,8 +134,8 @@ const MainLayout = ({ children }) => {
         setCurrentMovie(movie)
 
         // if (movie) {
-
-        //     setSearchParams({ movie: movie.id })
+        //     router.push('/movie')
+        //     //setSearchParams({ movie: movie.id })
         // }
 
         if (!movie) {
@@ -175,5 +175,6 @@ const MainLayout = ({ children }) => {
 }
 
 export const AppContext = React.createContext()
+export const useAppContext = () => useContext(AppContext)
 
 export default MainLayout

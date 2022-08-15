@@ -71,6 +71,7 @@ function SearchResults() {
     const ctx = useContext(AppContext)
 
     //const [searchParams, setSearchParams] = useSearchParams()
+    //console.log(router)
     const title = router.query['title'] || ''
     const movie = router.query['movie'] || ''
     const genre = router.query['genre'] || ''
@@ -113,6 +114,8 @@ function SearchResults() {
             dispatch(getMovie(movie))
             return
         }
+
+        console.log(query)
 
         dispatch(fetchMovies(query))
     }, [searchQuery, title, movie, genre, sortBy])

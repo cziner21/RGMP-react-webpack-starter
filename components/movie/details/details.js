@@ -46,32 +46,42 @@ const Description = styled.div`
     margin-top: 1em;
 `
 
-function Details() {
+const Details = () => {
     const ctx = useContext(AppContext)
 
+    if (!ctx.currentMovie) {
+        return <></>
+    }
+
     return (
-        <Wrapper>
-            <CoverImage imagePath={ctx.currentMovie.poster_path} />
-            <Content>
-                <div className="flex align-items-center">
-                    <Title>{ctx.currentMovie.title}</Title>
-                    <Rating>{ctx.currentMovie.vote_average}</Rating>
-                </div>
-                <MovieGenres genres={ctx.currentMovie.genres} />
-                <div
-                    style={{
-                        marginTop: '1em',
-                    }}
-                >
-                    <ReleaseDate>{ctx.currentMovie.release_date}</ReleaseDate>
-                    <Duration>{ctx.currentMovie.runtime} min</Duration>
-                </div>
-                <Description data-cy="movie-description">
-                    {ctx.currentMovie.overview}
-                </Description>
-            </Content>
-        </Wrapper>
+        <div>
+            <span>{ctx.currentMovie.title}</span>
+        </div>
     )
+
+    // return (
+    //     <Wrapper>
+    //         <CoverImage imagePath={ctx.currentMovie.poster_path} />
+    //         <Content>
+    //             <div className="flex align-items-center">
+    //                 <Title>{ctx.currentMovie.title}</Title>
+    //                 <Rating>{ctx.currentMovie.vote_average}</Rating>
+    //             </div>
+    //             <MovieGenres genres={ctx.currentMovie.genres} />
+    //             <div
+    //                 style={{
+    //                     marginTop: '1em',
+    //                 }}
+    //             >
+    //                 <ReleaseDate>{ctx.currentMovie.release_date}</ReleaseDate>
+    //                 <Duration>{ctx.currentMovie.runtime} min</Duration>
+    //             </div>
+    //             <Description data-cy="movie-description">
+    //                 {ctx.currentMovie.overview}
+    //             </Description>
+    //         </Content>
+    //     </Wrapper>
+    // )
 }
 
 export default Details

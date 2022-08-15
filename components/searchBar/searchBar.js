@@ -35,7 +35,8 @@ function Search() {
             })
         )
 
-        //setSearchParams({ title: value })
+        //http://localhost:4000/movies?sortBy=title&sortOrder=asc&search=clover&searchBy=title&limit=100
+        router.push(`/search?search=${value}`)
     }
 
     return (

@@ -77,14 +77,11 @@ function Header({ onAddMovie }) {
                         </AddMovieButton>
                     )}
                 </div>
-                {ctx.currentMovie ? (
-                    <Details />
-                ) : (
-                    <SearchWrapper>
-                        <SearchLabel>Find your movie</SearchLabel>
-                        <Search />
-                    </SearchWrapper>
-                )}
+
+                <SearchWrapper>
+                    <SearchLabel>Find your movie</SearchLabel>
+                    <Search />
+                </SearchWrapper>
             </HeaderContent>
         </HeaderContainer>
     )
