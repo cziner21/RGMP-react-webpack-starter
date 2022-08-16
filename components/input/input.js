@@ -16,7 +16,7 @@ function StyledInput(props) {
         setCurrentValue(e.target.value)
 
         if (props.onHandleChange) {
-            props.onHandleChange(e)
+            props.onHandleChange(e.target.value)
         }
     }
 

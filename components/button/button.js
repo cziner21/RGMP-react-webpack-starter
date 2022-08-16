@@ -20,11 +20,19 @@ Button.propTypes = {
     secondary: PropTypes.bool,
 }
 
-const AddMovieButton = styled(Button)`
-    color: #f65261;
-    background-color: #555555;
-    border: none;
-`
+const AddMovieButton = ({ children }) => {
+    return (
+        <button
+            style={{
+                color: '#f65261',
+                backgroundColor: '#555555',
+                border: 'none',
+            }}
+        >
+            {children}
+        </button>
+    )
+}
 
 const SearchButton = styled(Button)`
     background-color: transparent;

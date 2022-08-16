@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
@@ -11,6 +11,7 @@ import {
 
 import StyledInput from '../input/input'
 import { Button } from '../button/button'
+import Link from 'next/link'
 
 const SearchBar = styled.div`
     display: flex;
@@ -22,21 +23,13 @@ const SearchBar = styled.div`
 function Search() {
     const dispatch = useDispatch()
     const router = useRouter()
+    const [currentValue, setCurrentValue] = useState('')
 
     const { title } = router.query
 
     const handleButtonClicked = (value) => {
-        console.log(`Search button clicked ${value}`)
-        dispatch(
-            setSearchQuery({
-                ...defaultSearchParams,
-                search: value,
-                searchBy: 'title',
-            })
-        )
-
         //http://localhost:4000/movies?sortBy=title&sortOrder=asc&search=clover&searchBy=title&limit=100
-        router.push(`/search?search=${value}`)
+        router.push('/search')
     }
 
     return (
@@ -52,15 +45,22 @@ function Search() {
                         value={title}
                         placeholder={'What do you want to watch?'}
                         onEnterPressed={(value) => handleButtonClicked(value)}
+                        onHandleChange={(value) => setCurrentValue(value)}
                     />
                 </Form>
             </Formik>
-            <Button
-                data-testid={'search-button'}
-                onClick={() => handleButtonClicked()}
-            >
-                Search
-            </Button>
+            <Link href={`/search?search=${currentValue}`}>
+                <a
+                    style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                    }}
+                    data-testid={'search-button'}
+                    onClick={() => handleButtonClicked()}
+                >
+                    Search
+                </a>
+            </Link>
         </SearchBar>
     )
 }

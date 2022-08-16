@@ -53,10 +53,11 @@ const Description = styled.div`
     margin-top: 1em;
 `
 
-const getMovie = async (id = 333371) => {
+const getMovie = async (id) => {
     try {
         const response = await axios.get(`${BASE_URL}/${id}`)
-        return response.data
+        debugger
+        return response
     } catch (error) {
         return error.message
     }
@@ -64,15 +65,8 @@ const getMovie = async (id = 333371) => {
 
 export async function getServerSideProps(context) {
     const { params } = context
-    let response = await getMovie(333371)
 
-    if (!response || !response.data) {
-        return {
-            props: {
-                data: null,
-            },
-        }
-    }
+    const response = await getMovie(params.mid)
 
     return {
         props: {
@@ -90,12 +84,41 @@ const MoviePage = ({ data }) => {
 
     return (
         <Container>
-            <Wrapper>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
+            >
                 <CoverImage imagePath={data?.poster_path} />
-                <Content>
+                <div
+                    style={{
+                        marginLeft: '2em',
+                        color: '#ffffff',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        maxWidth: '70%',
+                    }}
+                >
                     <div className="flex align-items-center">
                         <Title>{data?.title}</Title>
-                        <Rating>{data?.vote_average}</Rating>
+                        <div
+                            style={{
+                                marginLeft: '1em',
+                                borderRadius: '50%',
+                                height: '40px',
+                                width: '40px',
+                                padding: '1em',
+                                border: 'solid 2px #ffffff',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '1.2rem',
+                                color: '#ffffff',
+                            }}
+                        >
+                            {data?.vote_average}
+                        </div>
                     </div>
                     <MovieGenres genres={data?.genres} />
                     <div
@@ -103,14 +126,21 @@ const MoviePage = ({ data }) => {
                             marginTop: '1em',
                         }}
                     >
-                        <ReleaseDate>{data?.release_date}</ReleaseDate>
+                        <div
+                            style={{
+                                color: '#f65261',
+                                marginRight: '2em',
+                            }}
+                        >
+                            {data?.release_date}
+                        </div>
                         <Duration>{data?.runtime} min</Duration>
                     </div>
                     <Description data-cy="movie-description">
                         {data?.overview}
                     </Description>
-                </Content>
-            </Wrapper>
+                </div>
+            </div>
         </Container>
     )
 }

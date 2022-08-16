@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 import NotFound from '../404/404'
 
@@ -131,23 +132,41 @@ function SearchResults({ data }) {
 
     if (data?.length === 1) {
         content = (
-            <Movie
-                key={data[0].id}
-                movie={data[0]}
-                onEditMovie={() => {}}
-                onDeleteMovie={() => {}}
-            />
+            <Link href={`/movie/${data[0].id}`}>
+                <a
+                    style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                    }}
+                >
+                    <Movie
+                        key={data[0].id}
+                        movie={data[0]}
+                        onEditMovie={() => {}}
+                        onDeleteMovie={() => {}}
+                    />
+                </a>
+            </Link>
         )
     }
 
     if (data?.length > 1) {
         content = data.map((item) => (
-            <Movie
-                key={item.id}
-                movie={item}
-                onEditMovie={() => {}}
-                onDeleteMovie={() => {}}
-            />
+            <Link href={`/movie/${item.id}`}>
+                <a
+                    style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                    }}
+                >
+                    <Movie
+                        key={item.id}
+                        movie={item}
+                        onEditMovie={() => {}}
+                        onDeleteMovie={() => {}}
+                    />
+                </a>
+            </Link>
         ))
     }
 
