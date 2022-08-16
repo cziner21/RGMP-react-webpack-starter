@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -16,6 +16,7 @@
   "devDependencies": {
     "@reduxjs/toolkit": "^1.8.3",
     "axios": "^0.27.2",
+    "cross-env": "^7.0.3",
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.4",
     "formik": "^2.2.9",
